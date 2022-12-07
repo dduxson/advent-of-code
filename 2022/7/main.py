@@ -43,13 +43,13 @@ def ConstructTree():
 
     return top_node
 
-def FindAndPopulateDirectoriesSize(node):
+def FindAndPopulateSizes(node):
     if node.type == "file":
         return node.size
     
     size = 0
     for child in node.children:
-        size += FindAndPopulateDirectoriesSize(child)
+        size += FindAndPopulateSizes(child)
 
     node.size = size
     return size
@@ -84,7 +84,7 @@ def SmallestSizeDirGreaterOrEqualMin(tree, min_size):
 def main():
     tree = ConstructTree()
     #tree.print()
-    used_size = FindAndPopulateDirectoriesSize(tree)
+    used_size = FindAndPopulateSizes(tree)
 
     print(SumDirSizesLessOrEqualMax(tree, 100000))
     print(SmallestSizeDirGreaterOrEqualMin(tree, 30000000-(70000000-used_size)))
